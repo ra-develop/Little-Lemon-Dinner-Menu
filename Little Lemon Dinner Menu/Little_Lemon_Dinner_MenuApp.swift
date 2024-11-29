@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct Little_Lemon_Dinner_MenuApp: App {
+    @StateObject var settings = GlobalSettings.shared
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(settings)
         }
     }
 }

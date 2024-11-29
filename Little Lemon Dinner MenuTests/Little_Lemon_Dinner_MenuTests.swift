@@ -45,15 +45,157 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         XCTAssert(testMockDataByDrinkCategory.count == 8)
         
-        let testMockDataByDessertCategory = testMockData.mockMenuItems.filter { $0.category == MenuCategory.Desert }
+        let testMockDataByDessertCategory = testMockData.mockMenuItems.filter { $0.category == MenuCategory.Dessert }
         
         XCTAssert(testMockDataByDessertCategory.count == 4)
         
         let item = testMockData.mockMenuItems.first!
         
-        let classItem = MenuItem(price: item.price, title: item.title, category: item.category, ordes: item.ordes, ingredient: item.ingredient)
+        let classItem = MenuItem(price: item.price, title: item.title, category: item.category, ordes: item.orders, ingredient: item.ingredient)
 
         XCTAssert(type(of: item) == type(of: classItem))
+    }
+    
+    func test_viewModel_initialisation_and_loadingData() throws {
+        let viewModel = MenuViewViewModel()
+        
+        XCTAssert(viewModel.menuitems.count == 24)
+        
+        viewModel.loadMenuItems()
+        
+        XCTAssert(viewModel.menuitems.count == 24)
+        
+    }
+    
+    
+    func test_viewModel_select_menuItems_by_category() throws {
+        let viewModel = MenuViewViewModel()
+        
+        let settings = GlobalSettings.shared
+        let screenRect = UIScreen.main.bounds
+        let screenWidth = screenRect.width
+        let chunkedNumber = Int(screenWidth / settings.itemViewSize.width)
+                
+        let foodMenuItems = viewModel.menuitems.filter { $0.category == MenuCategory.Food}.chunked(into: chunkedNumber)
+
+        
+        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        
+        XCTAssert(foodMenuItems.count == foods.count)
+        
+        XCTAssert(foods.first?.count == chunkedNumber)
+    }
+    
+    func test_viewModel_sorting_by_Most_Popular () throws {
+        let viewModel = MenuViewViewModel()
+        
+        viewModel.sortMenuItems(sortMethod: .popular)
+        
+        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        
+        let firsFoodElementIndex = (0, 0)
+        let lastFoodElementIndex = (foods.count - 1, foods[foods.count-1].count - 1)
+        
+        let firstFoodElement = foods[firsFoodElementIndex.0][firsFoodElementIndex.1]
+        let lastFoodElement = foods[lastFoodElementIndex.0][lastFoodElementIndex.1]
+                
+        XCTAssert( firstFoodElement.orders >= lastFoodElement.orders )
+        
+        let drinks = viewModel.selectMenuItemsByCategory(category: .Drink)
+        
+        let firsDrinkElementIndex = (0, 0)
+        let lastDrinkElementIndex = (drinks.count - 1, drinks[drinks.count-1].count - 1)
+        
+        let firstDrinkElement = drinks[firsDrinkElementIndex.0][firsDrinkElementIndex.1]
+        let lastDrinkElement = drinks[lastDrinkElementIndex.0][lastDrinkElementIndex.1]
+        
+        XCTAssert( firstDrinkElement.orders >= lastDrinkElement.orders )
+        
+        let desserts = viewModel.selectMenuItemsByCategory(category: .Food)
+        
+        let firsDesertElementIndex = (0, 0)
+        let lastDesertElementIndex = (desserts.count - 1, desserts[desserts.count-1].count - 1)
+        
+        let firstDesertElement = desserts[firsDesertElementIndex.0][firsDesertElementIndex.1]
+        let lastDesertElement = desserts[lastDesertElementIndex.0][lastDesertElementIndex.1]
+        
+        XCTAssert( firstDesertElement.orders >= lastDesertElement.orders )
+        
+
+    }
+    
+    func test_viewModel_sorting_by_Price_$_$$$ () throws {
+        let viewModel = MenuViewViewModel()
+        
+        viewModel.sortMenuItems(sortMethod: .price)
+        
+        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        
+        let firsFoodElementIndex = (0, 0)
+        let lastFoodElementIndex = (foods.count - 1, foods[foods.count-1].count - 1)
+        
+        let firstFoodElement = foods[firsFoodElementIndex.0][firsFoodElementIndex.1]
+        let lastFoodElement = foods[lastFoodElementIndex.0][lastFoodElementIndex.1]
+        
+        XCTAssert( firstFoodElement.price <= lastFoodElement.price )
+        
+        let drinks = viewModel.selectMenuItemsByCategory(category: .Drink)
+        
+        let firsDrinkElementIndex = (0, 0)
+        let lastDrinkElementIndex = (drinks.count - 1, drinks[drinks.count-1].count - 1)
+        
+        let firstDrinkElement = drinks[firsDrinkElementIndex.0][firsDrinkElementIndex.1]
+        let lastDrinkElement = drinks[lastDrinkElementIndex.0][lastDrinkElementIndex.1]
+        
+        XCTAssert( firstDrinkElement.price <= lastDrinkElement.price )
+        
+        let desserts = viewModel.selectMenuItemsByCategory(category: .Food)
+        
+        let firsDesertElementIndex = (0, 0)
+        let lastDesertElementIndex = (desserts.count - 1, desserts[desserts.count-1].count - 1)
+        
+        let firstDesertElement = desserts[firsDesertElementIndex.0][firsDesertElementIndex.1]
+        let lastDesertElement = desserts[lastDesertElementIndex.0][lastDesertElementIndex.1]
+        
+        XCTAssert( firstDesertElement.price <= lastDesertElement.price )
+
+    }
+    
+    func test_viewModel_sorting_by_A_Z () throws {
+        let viewModel = MenuViewViewModel()
+        
+        viewModel.sortMenuItems(sortMethod: .alphabet)
+        
+        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        
+        let firsFoodElementIndex = (0, 0)
+        let lastFoodElementIndex = (foods.count - 1, foods[foods.count-1].count - 1)
+        
+        let firstFoodElement = foods[firsFoodElementIndex.0][firsFoodElementIndex.1]
+        let lastFoodElement = foods[lastFoodElementIndex.0][lastFoodElementIndex.1]
+        
+        XCTAssert( firstFoodElement.title <= lastFoodElement.title )
+        
+        let drinks = viewModel.selectMenuItemsByCategory(category: .Drink)
+        
+        let firsDrinkElementIndex = (0, 0)
+        let lastDrinkElementIndex = (drinks.count - 1, drinks[drinks.count-1].count - 1)
+        
+        let firstDrinkElement = drinks[firsDrinkElementIndex.0][firsDrinkElementIndex.1]
+        let lastDrinkElement = drinks[lastDrinkElementIndex.0][lastDrinkElementIndex.1]
+        
+        XCTAssert( firstDrinkElement.title <= lastDrinkElement.title )
+        
+        let desserts = viewModel.selectMenuItemsByCategory(category: .Food)
+        
+        let firsDesertElementIndex = (0, 0)
+        let lastDesertElementIndex = (desserts.count - 1, desserts[desserts.count-1].count - 1)
+        
+        let firstDesertElement = desserts[firsDesertElementIndex.0][firsDesertElementIndex.1]
+        let lastDesertElement = desserts[lastDesertElementIndex.0][lastDesertElementIndex.1]
+        
+        XCTAssert( firstDesertElement.title <= lastDesertElement.title )
+
     }
 
 }

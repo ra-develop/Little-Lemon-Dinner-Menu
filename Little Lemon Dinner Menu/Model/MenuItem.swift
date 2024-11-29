@@ -13,12 +13,12 @@ protocol MenuItemProtocol {
     var price: Double { get }
     var title: String { get }
     var category: MenuCategory { get }
-    var ordes: Int { set get }
+    var orders: Int { set get }
     var priceVarInt: Int { set get }
     var ingredient: [Ingredient] { set get }
 }
 
-class MenuItem: MenuItemProtocol {
+class MenuItem: MenuItemProtocol, Identifiable {
     var id: UUID = UUID()
     
     var price: Double
@@ -27,7 +27,7 @@ class MenuItem: MenuItemProtocol {
     
     var category: MenuCategory
     
-    var ordes: Int
+    var orders: Int
     
     var priceVarInt: Int = 0
     
@@ -37,7 +37,7 @@ class MenuItem: MenuItemProtocol {
         self.price = price
         self.title = title
         self.category = category
-        self.ordes = ordes
+        self.orders = ordes
         self.ingredient = ingredient
     }
 }

@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct ItemView: View {
+    @State var item: MenuItem
+    @EnvironmentObject var settings: GlobalSettings
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Color.black.frame(width: settings.itemViewSize.width, height: settings.itemViewSize.height, alignment: .center)
+            Text(item.title)
+        }
     }
 }
 
 #Preview {
-    ItemView()
+    @Previewable @StateObject var settings: GlobalSettings = GlobalSettings.shared
+    ItemView(item: MenuItemsMockData().mockMenuItems.first!).environmentObject(settings)
 }

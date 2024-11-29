@@ -32,29 +32,34 @@ struct MenuItemsMockData {
     
     private func mockMenuItemsGenerator() -> [MenuItem] {
         var result: [MenuItem] = []
-        for type in MenuCategory.allCases {
-            result.append(contentsOf: mockMenuItemsCategorytGenerator(itemsCount: mockMenuItemsCountByCategoryType(type: type), category: type))
+        for category in MenuCategory.allCases {
+            result.append(contentsOf: mockMenuItemsCategorytGenerator(itemsCount: mockMenuItemsCountByCategoryType(category: category), category: category))
         }
         return result
     }
 
-    private func mockMenuItemsCountByCategoryType(type: MenuCategory) -> Int {
-        return switch type {
+    private func mockMenuItemsCountByCategoryType(category: MenuCategory) -> Int {
+        return switch category {
         case .Food:
             12
         case .Drink:
             8
-        case .Desert:
+        case .Dessert:
             4
+        case .All:
+            0
         }
     }
     
     private func mockMenuItemsCategorytGenerator(itemsCount: Int, category: MenuCategory) -> [MenuItem]  {
         var result: [MenuItem] = []
+        guard itemsCount != 0 else {
+            return result
+        }
         for i in 1...itemsCount {
             result.append(MenuItem(
                 price: Double.random(in: 0...1000),
-                title: category.rawValue + String(i),
+                title: category.rawValue + " " + String(i),
                 category: category,
                 ordes: 0,
                 ingredient: mockMenuIngredientsGenerator()
