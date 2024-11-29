@@ -7,9 +7,38 @@
 
 import Foundation
 
-struct MenuItem: Identifiable {
-    var id = UUID()
+
+protocol MenuItemProtocol {
+    var id: UUID { get }
+    var price: Double { get }
+    var title: String { get }
+    var category: MenuCategory { get }
+    var ordes: Int { set get }
+    var priceVarInt: Int { set get }
+    var ingredient: [Ingredient] { set get }
+}
+
+class MenuItem: MenuItemProtocol {
+    var id: UUID = UUID()
     
-    let titile: String
-    let ingredient: [Ingredient]
+    var price: Double
+    
+    var title: String
+    
+    var category: MenuCategory
+    
+    var ordes: Int
+    
+    var priceVarInt: Int
+    
+    var ingredient: [Ingredient]
+    
+    init(id: UUID, price: Double, title: String, category: MenuCategory, ordes: Int, priceVarInt: Int, ingredient: [Ingredient]) {
+        self.price = price
+        self.title = title
+        self.category = category
+        self.ordes = ordes
+        self.priceVarInt = priceVarInt
+        self.ingredient = ingredient
+    }
 }
