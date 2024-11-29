@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct MenuItem: Identifiable {
+    var id = UUID()
+    
+    let titile: String
+    let ingredient: [Ingredient]
+}

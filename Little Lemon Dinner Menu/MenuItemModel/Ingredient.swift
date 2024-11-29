@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+enum Ingredient: String, CaseIterable {
+    case Spinach
+    case Broccoli
+    case Carrot
+    case Past
+    case Tomato = "Tomato sause"
+}
