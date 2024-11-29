@@ -37,17 +37,23 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         let testMockData = MenuItemsMockData()
         XCTAssert(testMockData.mockMenuItems.count == 24)
                 
-        let testMockDataByFoodCategory = testMockData.mockMenuItems.filter { $0.titile == MenuCategory.Food.rawValue }
+        let testMockDataByFoodCategory = testMockData.mockMenuItems.filter { $0.category == MenuCategory.Food }
         
         XCTAssert(testMockDataByFoodCategory.count == 12)
         
-        let testMockDataByDrinkCategory = testMockData.mockMenuItems.filter { $0.titile == MenuCategory.Drink.rawValue }
+        let testMockDataByDrinkCategory = testMockData.mockMenuItems.filter { $0.category == MenuCategory.Drink }
         
         XCTAssert(testMockDataByDrinkCategory.count == 8)
         
-        let testMockDataByDessertCategory = testMockData.mockMenuItems.filter { $0.titile == MenuCategory.Desert.rawValue }
+        let testMockDataByDessertCategory = testMockData.mockMenuItems.filter { $0.category == MenuCategory.Desert }
         
         XCTAssert(testMockDataByDessertCategory.count == 4)
+        
+        let item = testMockData.mockMenuItems.first!
+        
+        let classItem = MenuItem(price: item.price, title: item.title, category: item.category, ordes: item.ordes, ingredient: item.ingredient)
+
+        XCTAssert(type(of: item) == type(of: classItem))
     }
 
 }

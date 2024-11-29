@@ -29,16 +29,15 @@ class MenuItem: MenuItemProtocol {
     
     var ordes: Int
     
-    var priceVarInt: Int
+    var priceVarInt: Int = 0
     
     var ingredient: [Ingredient]
     
-    init(id: UUID, price: Double, title: String, category: MenuCategory, ordes: Int, priceVarInt: Int, ingredient: [Ingredient]) {
+    init(price: Double, title: String, category: MenuCategory, ordes: Int, ingredient: [Ingredient]) {
         self.price = price
         self.title = title
         self.category = category
         self.ordes = ordes
-        self.priceVarInt = priceVarInt
         self.ingredient = ingredient
     }
 }

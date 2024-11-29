@@ -7,6 +7,22 @@
 
 import Foundation
 
+//struct MockMenuItem: MenuItemProtocol {
+//    var price: Double = 0.0
+//    
+//    var title: String
+//    
+//    var category: MenuCategory
+//    
+//    var ordes: Int = 0
+//    
+//    var priceVarInt: Int = 0
+//    
+//    var id  = UUID()
+//    
+//    var ingredient: [Ingredient]
+//}
+
 struct MenuItemsMockData {
     var mockMenuItems: [MenuItem] {
         get {
@@ -17,7 +33,7 @@ struct MenuItemsMockData {
     private func mockMenuItemsGenerator() -> [MenuItem] {
         var result: [MenuItem] = []
         for type in MenuCategory.allCases {
-            result.append(contentsOf: mockMenuItemsCategorytGenerator(itemsCount: mockMenuItemsCountByCategoryType(type: type), type: type))
+            result.append(contentsOf: mockMenuItemsCategorytGenerator(itemsCount: mockMenuItemsCountByCategoryType(type: type), category: type))
         }
         return result
     }
@@ -33,12 +49,15 @@ struct MenuItemsMockData {
         }
     }
     
-    private func mockMenuItemsCategorytGenerator(itemsCount: Int, type: MenuCategory) -> [MenuItem]  {
+    private func mockMenuItemsCategorytGenerator(itemsCount: Int, category: MenuCategory) -> [MenuItem]  {
         var result: [MenuItem] = []
         for i in 1...itemsCount {
             result.append(MenuItem(
-                titile: type.rawValue, ingredient: mockMenuIngredientsGenerator()
-                
+                price: Double.random(in: 0...1000),
+                title: category.rawValue + String(i),
+                category: category,
+                ordes: 0,
+                ingredient: mockMenuIngredientsGenerator()
             ))
         }
         return result
@@ -48,7 +67,7 @@ struct MenuItemsMockData {
         var result: [Ingredient] = []
         let ingredientsCount = Int.random(in: 0..<Ingredient.allCases.count)
 
-        for i in 0...ingredientsCount {
+        for _ in 0...ingredientsCount {
             result.append(Ingredient.allCases.randomElement()!)
         }
         return result
