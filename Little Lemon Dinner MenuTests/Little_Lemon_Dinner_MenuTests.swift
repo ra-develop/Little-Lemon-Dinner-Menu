@@ -79,7 +79,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         let foodMenuItems = viewModel.menuitems.filter { $0.category == MenuCategory.Food}.chunked(into: chunkedNumber)
 
         
-        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        let foods = viewModel.getMenuItemsByCategory(category: .Food)
         
         XCTAssert(foodMenuItems.count == foods.count)
         
@@ -91,7 +91,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         viewModel.sortMenuItems(sortMethod: .popular)
         
-        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        let foods = viewModel.getMenuItemsByCategory(category: .Food)
         
         let firsFoodElementIndex = (0, 0)
         let lastFoodElementIndex = (foods.count - 1, foods[foods.count-1].count - 1)
@@ -101,7 +101,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
                 
         XCTAssert( firstFoodElement.orders >= lastFoodElement.orders )
         
-        let drinks = viewModel.selectMenuItemsByCategory(category: .Drink)
+        let drinks = viewModel.getMenuItemsByCategory(category: .Drink)
         
         let firsDrinkElementIndex = (0, 0)
         let lastDrinkElementIndex = (drinks.count - 1, drinks[drinks.count-1].count - 1)
@@ -111,7 +111,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         XCTAssert( firstDrinkElement.orders >= lastDrinkElement.orders )
         
-        let desserts = viewModel.selectMenuItemsByCategory(category: .Food)
+        let desserts = viewModel.getMenuItemsByCategory(category: .Food)
         
         let firsDesertElementIndex = (0, 0)
         let lastDesertElementIndex = (desserts.count - 1, desserts[desserts.count-1].count - 1)
@@ -129,7 +129,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         viewModel.sortMenuItems(sortMethod: .price)
         
-        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        let foods = viewModel.getMenuItemsByCategory(category: .Food)
         
         let firsFoodElementIndex = (0, 0)
         let lastFoodElementIndex = (foods.count - 1, foods[foods.count-1].count - 1)
@@ -139,7 +139,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         XCTAssert( firstFoodElement.price <= lastFoodElement.price )
         
-        let drinks = viewModel.selectMenuItemsByCategory(category: .Drink)
+        let drinks = viewModel.getMenuItemsByCategory(category: .Drink)
         
         let firsDrinkElementIndex = (0, 0)
         let lastDrinkElementIndex = (drinks.count - 1, drinks[drinks.count-1].count - 1)
@@ -149,7 +149,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         XCTAssert( firstDrinkElement.price <= lastDrinkElement.price )
         
-        let desserts = viewModel.selectMenuItemsByCategory(category: .Food)
+        let desserts = viewModel.getMenuItemsByCategory(category: .Food)
         
         let firsDesertElementIndex = (0, 0)
         let lastDesertElementIndex = (desserts.count - 1, desserts[desserts.count-1].count - 1)
@@ -166,7 +166,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         viewModel.sortMenuItems(sortMethod: .alphabet)
         
-        let foods = viewModel.selectMenuItemsByCategory(category: .Food)
+        let foods = viewModel.getMenuItemsByCategory(category: .Food)
         
         let firsFoodElementIndex = (0, 0)
         let lastFoodElementIndex = (foods.count - 1, foods[foods.count-1].count - 1)
@@ -176,7 +176,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         XCTAssert( firstFoodElement.title <= lastFoodElement.title )
         
-        let drinks = viewModel.selectMenuItemsByCategory(category: .Drink)
+        let drinks = viewModel.getMenuItemsByCategory(category: .Drink)
         
         let firsDrinkElementIndex = (0, 0)
         let lastDrinkElementIndex = (drinks.count - 1, drinks[drinks.count-1].count - 1)
@@ -186,7 +186,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         
         XCTAssert( firstDrinkElement.title <= lastDrinkElement.title )
         
-        let desserts = viewModel.selectMenuItemsByCategory(category: .Food)
+        let desserts = viewModel.getMenuItemsByCategory(category: .Food)
         
         let firsDesertElementIndex = (0, 0)
         let lastDesertElementIndex = (desserts.count - 1, desserts[desserts.count-1].count - 1)

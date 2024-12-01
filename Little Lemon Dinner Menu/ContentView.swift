@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var settings: GlobalSettings
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        MenuItemsView()
     }
 }
 
 #Preview {
-    ContentView()
+    @Previewable @StateObject var settings: GlobalSettings = GlobalSettings.shared
+    ContentView().environmentObject(settings)
 }

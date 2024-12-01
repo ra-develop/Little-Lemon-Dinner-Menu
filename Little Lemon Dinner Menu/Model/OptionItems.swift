@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum OptinoItem: String, CaseIterable  {
+    case categories = "Selected categories"
+    case sorting = "Sort by"
+}

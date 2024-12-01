@@ -11,5 +11,4 @@ enum MenuCategory: String, CaseIterable  {
     case Food
     case Drink
     case Dessert
-    case All
 }

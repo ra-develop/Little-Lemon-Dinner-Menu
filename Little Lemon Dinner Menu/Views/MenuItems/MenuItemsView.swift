@@ -11,18 +11,27 @@ struct MenuItemsView: View {
     @EnvironmentObject var settings: GlobalSettings
     
     @ObservedObject var viewModel : MenuViewViewModel = MenuViewViewModel()
-        
+    
+    @State var presentOption = false
+    @State var presentDetail = false
+    @State var menuItem: MenuItem? = nil
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(MenuCategory.allCases, id: \.self  ) { category in
-                    if category != .All {
+                    if viewModel.selectedMenuCategories.contains(category) {
                         Section(header: Text(category.rawValue)) {
-                            Grid {
-                                ForEach(Array(viewModel.selectMenuItemsByCategory(category: category).enumerated()), id: \.offset) { index, rowItems in
-                                    GridRow {
+                            VStack(alignment: .leading) {
+                                ForEach(Array(viewModel.getMenuItemsByCategory(category: category).enumerated()), id: \.offset) { index, rowItems in
+                                    HStack {
                                         ForEach(rowItems) { item in
-                                            ItemView(item: item).environmentObject(settings)
+                                            ItemView(item: item)
+                                                .environmentObject(settings)
+                                                .onTapGesture(perform: {
+                                                    self.menuItem = item
+                                                    self.presentDetail.toggle()
+                                                })
                                         }
                                     }
                                 }
@@ -32,16 +41,26 @@ struct MenuItemsView: View {
                 }
             }
             .navigationTitle("Menu")
+            .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        // Call Option View
-
-                    }, label: {
+                    Button {
+                        self.presentOption.toggle()
+                    } label: {
                         Image(systemName: "slider.horizontal.3")
-                    })
+                    }
                 }
             }
+            .sheet(isPresented: $presentOption, content: {
+                ItemsOptionView()
+                    .environmentObject(viewModel)
+                    .transition(.slide)
+                    .navigationBarBackButtonHidden()
+            })
+            .navigationDestination(isPresented: $presentDetail, destination: {
+                EmptyView()
+            })
+
         }
     }
 }

@@ -46,8 +46,6 @@ struct MenuItemsMockData {
             8
         case .Dessert:
             4
-        case .All:
-            0
         }
     }
     
@@ -59,7 +57,7 @@ struct MenuItemsMockData {
         for i in 1...itemsCount {
             result.append(MenuItem(
                 price: Double.random(in: 0...1000),
-                title: category.rawValue + " " + String(i),
+                title: category.rawValue + " " + convert(i, digitsNumber: 3),
                 category: category,
                 ordes: 0,
                 ingredient: mockMenuIngredientsGenerator()
@@ -77,6 +75,11 @@ struct MenuItemsMockData {
         }
         return result
         
+    }
+    
+    private func convert(_ score: Int, digitsNumber: Int) -> String {
+        let format = "%0\(digitsNumber)ld"
+        return String(format: format, score)
     }
     
 }

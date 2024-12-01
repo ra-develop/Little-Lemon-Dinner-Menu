@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class MenuViewViewModel: ObservableObject {
     
@@ -17,12 +18,13 @@ class MenuViewViewModel: ObservableObject {
     
     private var chunkedNumber: Int = 1
     
+    private var menuitems: [MenuItem] = []
     
-    @Published var menuitems: [MenuItem] = []
-    @Published var selectedCategory: MenuCategory = MenuCategory.All
-    @Published var selectedSortMethod: SortMenuItemMethods =  SortMenuItemMethods.unsorted
+    @Published private(set) var selectedMenuCategories: [MenuCategory] = [.Food, .Drink, .Dessert]
+    @Published private(set) var selectedSortMethod: MenuItemSortMethod? =  nil
     
     init() {
+        print("ViewModel started")
         loadMenuItems()
         let screenRect = UIScreen.main.bounds
         let screenWidth = screenRect.width
@@ -36,7 +38,7 @@ class MenuViewViewModel: ObservableObject {
         self.dessertMenuItems = self.menuitems.filter {$0.category == MenuCategory.Dessert}
     }
     
-    func selectMenuItemsByCategory(category: MenuCategory) -> [[MenuItem]]  {
+    func getMenuItemsByCategory(category: MenuCategory) -> [[MenuItem]]  {
         var selectedMenuItems: [MenuItem] = []
         switch category {
         case .Food:
@@ -45,13 +47,22 @@ class MenuViewViewModel: ObservableObject {
             selectedMenuItems = self.drinkMenyItems
         case .Dessert:
             selectedMenuItems = self.dessertMenuItems
-        case .All:
-            selectedMenuItems = (self.foodMenuItems + self.drinkMenyItems + self.dessertMenuItems)
         }
         return selectedMenuItems.chunked(into: chunkedNumber)
     }
+
     
-    func sortMenuItems(sortMethod: SortMenuItemMethods) {
+    func setMenuCategoryFilter(selectedCategories: [SelectedMenuCategory]) {
+        self.selectedMenuCategories = selectedCategories.compactMap {
+            if $0.isSelected {
+                return $0.menuCategory
+            }
+            return nil
+        }
+    }
+    
+    func setSortMethod(sortMethod: MenuItemSortMethod?) {
+        self.selectedSortMethod = sortMethod
         switch sortMethod {
         case .popular:
             self.foodMenuItems.sort { $0.orders > $1.orders }
@@ -65,7 +76,7 @@ class MenuViewViewModel: ObservableObject {
             self.foodMenuItems.sort { $0.title < $1.title }
             self.drinkMenyItems.sort { $0.title < $1.title }
             self.dessertMenuItems.sort { $0.title < $1.title }
-        case .unsorted:
+        case .none:
             self.foodMenuItems.shuffle()
             self.drinkMenyItems.shuffle()
             self.dessertMenuItems.shuffle()
