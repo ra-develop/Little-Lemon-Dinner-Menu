@@ -59,7 +59,7 @@ struct MenuItemsMockData {
                 price: Double.random(in: 0...1000),
                 title: category.rawValue + " " + convert(i, digitsNumber: 3),
                 category: category,
-                ordes: 0,
+                ordes: Int.random(in: 0...1000),
                 ingredient: mockMenuIngredientsGenerator()
             ))
         }

@@ -22,9 +22,9 @@ struct MenuItemsView: View {
                 ForEach(MenuCategory.allCases, id: \.self  ) { category in
                     if viewModel.selectedMenuCategories.contains(category) {
                         Section(header: Text(category.rawValue)) {
-                            VStack(alignment: .leading) {
+                            Grid (alignment: .leading) {
                                 ForEach(Array(viewModel.getMenuItemsByCategory(category: category).enumerated()), id: \.offset) { index, rowItems in
-                                    HStack {
+                                    HStack(alignment: .top) {
                                         ForEach(rowItems) { item in
                                             ItemView(item: item)
                                                 .environmentObject(settings)
@@ -53,12 +53,14 @@ struct MenuItemsView: View {
             }
             .sheet(isPresented: $presentOption, content: {
                 ItemsOptionView()
-                    .environmentObject(viewModel)
+                    .environmentObject(self.viewModel)
                     .transition(.slide)
                     .navigationBarBackButtonHidden()
             })
             .navigationDestination(isPresented: $presentDetail, destination: {
-                EmptyView()
+                if let menuItem = self.menuItem {
+                    MenuItemDetailsView(menuItem: menuItem)
+                }
             })
 
         }

@@ -101,8 +101,6 @@ struct ItemsOptionView: View {
                         isSelected: isSelected
                     ))
                 })
-                print(self.selectedCategories)
-                print(self.sortMethods)
             }
 
         }

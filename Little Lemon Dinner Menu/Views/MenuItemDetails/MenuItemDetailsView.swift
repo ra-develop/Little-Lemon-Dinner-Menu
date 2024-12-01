@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct MenuItemDetailsView: View {
+    var menuItem: MenuItem
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ScrollView {
+                VStack {
+                    
+                    Image("LittleLemonLogo").resizable().scaledToFit().padding([.leading, .trailing], 70)
+                    Spacer()
+                    Text("Price:").bold()
+                    Text(String(format: "%.2f", menuItem.price))
+                    Spacer()
+                    Text("Ordered:").bold()
+                    Text(String(menuItem.orders))
+                    Spacer()
+                    Text("Ingredients:").bold()
+                    VStack {
+                        ForEach(Array(menuItem.ingredient), id: \.self) {ingredient in
+                            Text(ingredient.rawValue)
+                        }
+                        
+                    }
+                }
+            }
+            .navigationTitle(self.menuItem.title)
+
+        }
     }
 }
 
 #Preview {
-    MenuItemDetailsView()
+    var menuItem: MenuItem? = MenuItemsMockData().mockMenuItems.first
+    MenuItemDetailsView(menuItem: menuItem!)
 }
