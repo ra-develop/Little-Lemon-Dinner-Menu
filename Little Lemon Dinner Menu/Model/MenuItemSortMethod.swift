@@ -7,9 +7,8 @@
 
 import Foundation
 
-enum SortMenuItemMethods: String {
+enum MenuItemSortMethod: String, CaseIterable {
     case popular = "Most Popular"
     case price = "Price $-$$$"
     case alphabet = "A-Z"
-    case unsorted = ""
 }
