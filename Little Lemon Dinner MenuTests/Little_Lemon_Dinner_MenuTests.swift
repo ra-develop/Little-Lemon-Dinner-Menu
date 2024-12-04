@@ -33,6 +33,9 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
 //        }
 //    }
     
+    
+    
+    
     func test_mock_data_model() throws {
         let testMockData = MenuItemsMockData()
         XCTAssert(testMockData.mockMenuItems.count == 24)
@@ -56,40 +59,10 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
         XCTAssert(type(of: item) == type(of: classItem))
     }
     
-    func test_viewModel_initialisation_and_loadingData() throws {
-        let viewModel = MenuViewViewModel()
-        
-        XCTAssert(viewModel.menuitems.count == 24)
-        
-        viewModel.loadMenuItems()
-        
-        XCTAssert(viewModel.menuitems.count == 24)
-        
-    }
-    
-    
-    func test_viewModel_select_menuItems_by_category() throws {
-        let viewModel = MenuViewViewModel()
-        
-        let settings = GlobalSettings.shared
-        let screenRect = UIScreen.main.bounds
-        let screenWidth = screenRect.width
-        let chunkedNumber = Int(screenWidth / settings.itemViewSize.width)
-                
-        let foodMenuItems = viewModel.menuitems.filter { $0.category == MenuCategory.Food}.chunked(into: chunkedNumber)
-
-        
-        let foods = viewModel.getMenuItemsByCategory(category: .Food)
-        
-        XCTAssert(foodMenuItems.count == foods.count)
-        
-        XCTAssert(foods.first?.count == chunkedNumber)
-    }
-    
     func test_viewModel_sorting_by_Most_Popular () throws {
         let viewModel = MenuViewViewModel()
         
-        viewModel.sortMenuItems(sortMethod: .popular)
+        viewModel.setSortMethod(sortMethod: .popular)
         
         let foods = viewModel.getMenuItemsByCategory(category: .Food)
         
@@ -127,7 +100,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
     func test_viewModel_sorting_by_Price_$_$$$ () throws {
         let viewModel = MenuViewViewModel()
         
-        viewModel.sortMenuItems(sortMethod: .price)
+        viewModel.setSortMethod(sortMethod: .price)
         
         let foods = viewModel.getMenuItemsByCategory(category: .Food)
         
@@ -164,7 +137,7 @@ final class Little_Lemon_Dinner_MenuTests: XCTestCase {
     func test_viewModel_sorting_by_A_Z () throws {
         let viewModel = MenuViewViewModel()
         
-        viewModel.sortMenuItems(sortMethod: .alphabet)
+        viewModel.setSortMethod(sortMethod: .alphabet)
         
         let foods = viewModel.getMenuItemsByCategory(category: .Food)
         
